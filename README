@@ -1,0 +1,28 @@
+AssetTypes
+==========
+
+Adds asset types to Rails' AssetTagHelper, so you can have different
+asset hosts depending on the type of asset.
+
+This is basically a patched version of Rails 2.3.3 AssetTagHelper.  Not
+known (or expected) to work in other Rails versions.
+
+
+Example
+=======
+
+Set ActionController.asset_hosts as a hash in your environment.rb or
+in an initializer:
+
+ActionController::Base.asset_hosts = {'default' => 'http://defaulthost.com', 'alternate' => 'http://alternatehost.com'}
+
+'default' key is used when :asset_type is not specified:
+image_tag("foo.jpg") => <img alt='foo.jpg' src='http//defaulthost.com/images/foo.jpg' />
+
+Otherwise, host with the key provided is used:
+image_tag("foo.jpg", :asset_type => 'alternate') => <img alt='foo.jpg' src='http//alternatehost.com/images/foo.jpg' />
+
+If the asset_type provided does not match any key in the asset_hosts hash,
+the plugin falls back to ActionController::Base.asset_host.
+
+Copyright (c) 2009 Alf Mikula, released under the MIT license
