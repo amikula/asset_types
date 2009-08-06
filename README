@@ -4,9 +4,6 @@ AssetTypes
 Adds asset types to Rails' AssetTagHelper, so you can have different
 asset hosts depending on the type of asset.
 
-This is basically a patched version of Rails 2.3.3 AssetTagHelper.  Not
-known (or expected) to work in other Rails versions.
-
 
 Example
 =======

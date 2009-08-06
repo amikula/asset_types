@@ -1,16 +1,23 @@
 require 'rake'
-require 'rake/testtask'
+require 'spec/rake/spectask'
 require 'rake/rdoctask'
 
-desc 'Default: run unit tests.'
-task :default => :test
+desc 'Default: run specs.'
+task :default => :spec
 
-desc 'Test the asset_types plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
+desc 'Spec the asset_types plugin.'
+Spec::Rake::SpecTask.new(:spec) do |t|
+  t.spec_opts = ['--colour --format progress --loadby mtime --reverse']
+  t.spec_files = FileList['spec/**/*_spec.rb']
+end
+
+namespace :spec do
+  desc 'Run specs with rcov'
+  Spec::Rake::SpecTask.new(:rcov) do |t|
+    t.spec_opts = ['--colour --format progress --loadby mtime --reverse']
+    t.spec_files = FileList['spec/**/*_spec.rb']
+    t.rcov = true
+  end
 end
 
 desc 'Generate documentation for the asset_types plugin.'
