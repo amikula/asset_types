@@ -66,5 +66,11 @@ describe ActionView::Helpers::AssetTagHelper, :type => :helper do
     it 'creates stylesheet tags with the asset type specified' do
       helper.stylesheet_link_tag('foo.css', :asset_type => 'alternate').should =~ %r{href=(['"])http://alternate_host.com/stylesheets/foo.css\1}
     end
+
+    it '[BUG] does not reuse the asset_type from the previous call if the previous call was made with a fully qualified url and with an asset_host' do
+      helper.image_path('http://yp.com/images/foo.gif', :asset_type => 'alternate')
+
+      helper.image_path('/some_image.gif').should == 'http://default_host.com/some_image.gif'
+    end
   end
 end
